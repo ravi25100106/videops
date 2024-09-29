@@ -1,0 +1,87 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+.heading{
+    padding-left: 40%;
+    color:rgb(0, 0, 0);
+    text-decoration: wavy;
+}
+
+#finder {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#finder h2 {
+    margin-top: 0;
+}
+
+#finder-search-input {
+    width: calc(100% - 150px);
+    padding: 10px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#finder-clear-button {
+    background-color: #ffeb3b;
+}
+
+#finder-search-button {
+    margin: 10px;
+    background-color: #03a9f4;
+    color: white;
+}
+
+
+#finder-results-container h2 {
+    margin-top: 0;
+    padding: 20px;
+}
+
+#finder-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.thumbnail {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.thumbnail img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.thumbnail p {
+    margin: 10px 0 0;
+    font-size: 14px;
+}

@@ -1,0 +1,34 @@
+/* styles.css */
+
+.heading{
+    padding-left: 40%;
+    color:rgb(0, 0, 0);
+    text-decoration: wavy;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#gen-output-container {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+    ;
+}
