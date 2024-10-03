@@ -1,43 +1,273 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDEOPS</title>
-    <link rel="stylesheet" href="finder.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</head>
-<body>
-<nav class="navbar  navbar-light bg-light">
-        <div class="container-fluid">
-            <h1 class="heading">VIDEOPS</h1>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon bg-white"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a href=index.html style="font-size:20px; color: black;">Home</a></li>
-                <li class="nav-item"><a href=video_dubbing.html style="font-size:20px; color: black;">Video Translator</a></li>
-                <li class="nav-item"><a href=gen_ai.html style="font-size:20px; color: black;">Video Generator</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!--end if the nav bar-->
-<div id="finder">
-    <h2>Finder</h2>
-    <p>Type in the Text Box Below or Use the MIC Option:</p>
-    <input type="text" id="finder-search-input" placeholder="Search YouTube...">
-    <button id="finder-mic-button">&#x1F3A4;</button> <!-- Mic Icon -->
-    <button id="finder-clear-button">Clear</button>
-    <button id="finder-search-button">Search</button>
-</div>
-<div id="finder-results-container">
-    <h2>Results</h2>
-    <div id="finder-results"></div>
-</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VIDEOPS</title>
+        <link rel="stylesheet" href="finder.css" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        />
+        <style>
+            /* styles.css */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+            }
 
-<script src="scripts.js"></script>
-</body>
+            header {
+                text-align: center;
+                background-color: #f1f1f1;
+            }
+
+            .heading{
+                padding-left: 40%;
+                color:rgb(0, 0, 0);
+                text-decoration: wavy;
+            }
+
+            #finder {
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            #finder h2 {
+                margin-top: 0;
+            }
+
+            #finder-search-input {
+                width: calc(100% - 150px);
+                padding: 10px;
+                margin-right: 10px;
+            }
+
+            button {
+                padding: 10px;
+                margin-right: 10px;
+                cursor: pointer;
+                border: none;
+                border-radius: 5px;
+            }
+
+            #finder-clear-button {
+                background-color: #ffeb3b;
+            }
+
+            #finder-search-button {
+                margin: 10px;
+                background-color: #03a9f4;
+                color: white;
+            }
+
+
+            #finder-results-container h2 {
+                margin-top: 0;
+                padding: 20px;
+            }
+
+            #finder-results {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            .thumbnail {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .thumbnail:hover {
+                transform: scale(1.05);
+            }
+
+            .thumbnail img {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .thumbnail p {
+                margin: 10px 0 0;
+                font-size: 14px;
+            }
+
+        </style>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <h1 class="heading">VIDEOPS</h1>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon bg-white"></span>
+                </button>
+                <div
+                    class="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                >
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a
+                                href="index.html"
+                                style="font-size: 20px; color: black"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="video_dubbing.html"
+                                style="font-size: 20px; color: black"
+                                >Video Translator</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="gen_ai.html"
+                                style="font-size: 20px; color: black"
+                                >Video Generator</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--end if the nav bar-->
+        <div id="finder">
+            <h2>Finder</h2>
+            <p>Type in the Text Box Below or Use the MIC Option:</p>
+            <input
+                type="text"
+                id="finder-search-input"
+                placeholder="Search YouTube..."
+            />
+            <button id="finder-mic-button">&#x1F3A4;</button>
+            <!-- Mic Icon -->
+            <button id="finder-clear-button">Clear</button>
+            <button id="finder-search-button">Search</button>
+        </div>
+        <div id="finder-results-container">
+            <h2>Results</h2>
+            <div id="finder-results"></div>
+        </div>
+
+        <script>
+            // scripts.js
+            document.addEventListener("DOMContentLoaded", () => {
+                const searchButton = document.getElementById(
+                    "finder-search-button",
+                );
+                const clearButton = document.getElementById(
+                    "finder-clear-button",
+                );
+                const micButton = document.getElementById("finder-mic-button");
+                const searchInput = document.getElementById(
+                    "finder-search-input",
+                );
+                const resultsContainer =
+                    document.getElementById("finder-results");
+
+                const API_KEY = "AIzaSyDfMbHgSvWY4KT2coSua-LlMonaL4_I3FQ";
+
+                searchButton.addEventListener("click", () => {
+                    const query = searchInput.value;
+                    if (query) {
+                        searchYouTube(query);
+                    }
+                });
+
+                clearButton.addEventListener("click", () => {
+                    searchInput.value = "";
+                    resultsContainer.innerHTML = "";
+                });
+
+                micButton.addEventListener("click", () => {
+                    startVoiceRecognition();
+                });
+
+                function searchYouTube(query) {
+                    fetch(
+                        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${API_KEY}`,
+                    )
+                        .then((response) => response.json())
+                        .then((data) => displayResults(data.items))
+                        .catch((error) =>
+                            console.error(
+                                "Error fetching YouTube data:",
+                                error,
+                            ),
+                        );
+                }
+
+                function displayResults(videos) {
+                    resultsContainer.innerHTML = "";
+                    videos.forEach((video) => {
+                        const videoElement = document.createElement("div");
+                        videoElement.classList.add("thumbnail");
+                        videoElement.innerHTML = `
+                    <img src="${video.snippet.thumbnails.default.url}" alt="${video.snippet.title}">
+                    <p>${video.snippet.title}</p>
+                `;
+                        videoElement.addEventListener("click", () => {
+                            window.open(
+                                `https://www.youtube.com/watch?v=${video.id.videoId}`,
+                                "_blank",
+                            );
+                        });
+                        resultsContainer.appendChild(videoElement);
+                    });
+                }
+
+                function startVoiceRecognition() {
+                    if (!("webkitSpeechRecognition" in window)) {
+                        alert(
+                            "Your browser does not support speech recognition.",
+                        );
+                        return;
+                    }
+
+                    const recognition = new webkitSpeechRecognition();
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                    recognition.lang = "en-US";
+
+                    recognition.start();
+
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        searchInput.value = transcript;
+                        searchYouTube(transcript);
+                    };
+
+                    recognition.onerror = (event) => {
+                        console.error("Speech recognition error:", event.error);
+                    };
+
+                    recognition.onend = () => {
+                        console.log("Speech recognition service disconnected");
+                    };
+                }
+            });
+        </script>
+    </body>
 </html>

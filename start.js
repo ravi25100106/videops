@@ -1,24 +1,31 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
+const app = express();
 const port = 3000;
 
-http.createServer((req, res) => {
-  // Set the file path for the HTML file
-  let filePath = path.join(__dirname, 'index.html');
+// Serve static files from the "public" directory (this will handle HTML, CSS, JS, etc.)
+app.use(express.static(path.join(__dirname, "videops")));
 
-  // Read the HTML file and serve it
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      res.writeHead(500);
-      res.end('Error loading page.');
-    } else {
-      // Serve the HTML file with proper headers
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(content, 'utf-8');
-    }
-  });
-}).listen(port, () => {
+// Serve the landing page (index.html)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// Serve other HTML pages for navigation
+app.get("/video_finder", (req, res) => {
+  res.sendFile(path.join(__dirname, "video_finder.html"));
+});
+
+app.get("/video_dubbing", (req, res) => {
+  res.sendFile(path.join(__dirname, "video_dubbing.html"));
+});
+
+app.get("/gen_ai", (req, res) => {
+  res.sendFile(path.join(__dirname, "gen_ai.html"));
+});
+
+// Start the server
+app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

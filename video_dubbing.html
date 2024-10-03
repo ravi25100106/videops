@@ -7,6 +7,93 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="trans.css">
+  <style>
+    /* styles.css */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+    }
+
+    header {
+        text-align: center;
+        background-color: #f1f1f1;
+        padding: 20px 0;
+    }
+
+    .heading{
+        padding-left: 40%;
+        color:rgb(0, 0, 0);
+        text-decoration: wavy;
+    }
+
+    #translator-container, #result-container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .upload-section, .link-section, .convert-section, .output-section {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    #file-input {
+        display: none;
+    }
+
+    #trans-file-name {
+        width: 200px;
+        padding: 10px;
+        margin-right: 10px;
+        flex-grow: 1;
+    }
+
+    input[type="text"], button, select {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    #choose-button {
+        background-color: #f1f1f1;
+    }
+
+    #trans-upload-button, #fetch-button, #submit-button, #download-button {
+        background-color: #03a9f4;
+        color: white;
+    }
+
+    #thumbnail-container img {
+        width: 100%;
+        max-width: 300px;
+        margin-top: 20px;
+    }
+
+    #transoutput-video-container video {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 20px;
+    }
+
+    #download-button {
+        margin-top: 20px;
+    }
+
+  </style>
 </head>
 <body>
 <nav class="navbar  navbar-light bg-light">
@@ -41,7 +128,64 @@
   <div class="convert-section">
     <label for="language-dropdown">Convert To:</label>
     <select id="trans-language-dropdown">
-      <!-- Options will be dynamically populated -->
+        <option value="en">English</option>
+        <option value="af">Afrikaans</option>
+        <option value="ar">Arabic</option>
+        <option value="hy">Armenian</option>
+        <option value="az">Azerbaijani</option>
+        <option value="be">Belarusian</option>
+        <option value="bs">Bosnian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="ca">Catalan</option>
+        <option value="zh">Chinese</option>
+        <option value="hr">Croatian</option>
+        <option value="cs">Czech</option>
+        <option value="da">Danish</option>
+        <option value="nl">Dutch</option>
+        <option value="et">Estonian</option>
+        <option value="fi">Finnish</option>
+        <option value="fr">French</option>
+        <option value="gl">Galician</option>
+        <option value="de">German</option>
+        <option value="el">Greek</option>
+        <option value="he">Hebrew</option>
+        <option value="hi">Hindi</option>
+        <option value="hu">Hungarian</option>
+        <option value="is">Icelandic</option>
+        <option value="id">Indonesian</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="kn">Kannada</option>
+        <option value="kk">Kazakh</option>
+        <option value="ko">Korean</option>
+        <option value="lv">Latvian</option>
+        <option value="lt">Lithuanian</option>
+        <option value="mk">Macedonian</option>
+        <option value="ms">Malay</option>
+        <option value="mr">Marathi</option>
+        <option value="mi">Maori</option>
+        <option value="ne">Nepali</option>
+        <option value="no">Norwegian</option>
+        <option value="fa">Persian</option>
+        <option value="pl">Polish</option>
+        <option value="pt">Portuguese</option>
+        <option value="ro">Romanian</option>
+        <option value="ru">Russian</option>
+        <option value="sr">Serbian</option>
+        <option value="sk">Slovak</option>
+        <option value="sl">Slovenian</option>
+        <option value="es">Spanish</option>
+        <option value="sw">Swahili</option>
+        <option value="sv">Swedish</option>
+        <option value="tl">Tagalog</option>
+        <option value="ta">Tamil</option>
+        <option value="th">Thai</option>
+        <option value="tr">Turkish</option>
+        <option value="uk">Ukrainian</option>
+        <option value="ur">Urdu</option>
+        <option value="vi">Vietnamese</option>
+        <option value="cy">Welsh</option>
+    
     </select>
     <label for="output-dropdown">Output Type:</label>
     <select id="trans-output-dropdown">
@@ -61,6 +205,173 @@
   <button id="download-button">Download</button>
 </div>
 
-<script src="trans.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('file-input');
+        const chooseButton = document.getElementById('choose-button');
+        const fileNameInput = document.getElementById('trans-file-name');
+        const uploadButton = document.getElementById('trans-upload-button');
+        const languageDropdown = document.getElementById('trans-language-dropdown');
+        const outputDropdown = document.getElementById('trans-output-dropdown');
+        const submitButton = document.getElementById('submit-button');
+        const outputVideoContainer = document.getElementById('trans-output-video-container');
+        const doneButton = document.getElementById('download-button');
+
+        let fileId; // Will store the file ID for further API calls
+        let selectedLanguage;
+        let outputType;
+
+        const apiKey = '';
+        const baseUrl = 'https://api.elevenlabs.io/v1/dubbing'; //The base URL for the API
+
+        // Handle file selection
+        chooseButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameInput.value = fileInput.files[0].name;
+            }
+        });
+
+        // Handle file upload and send the POST request to dub the video
+        uploadButton.addEventListener('click', () => {
+            if (fileInput.files.length > 0 && languageDropdown.value !== 'None') {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('language', languageDropdown.value);
+                selectedLanguage = languageDropdown.value;
+
+                fetch(`${baseUrl}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    fileId = data.fileId; // Store the fileId for future API calls
+                    alert('File uploaded and dubbing started');
+                    fetchMetadata(); // Call the function to fetch metadata
+                })
+                .catch(error => {
+                    console.error('Error uploading the file:', error);
+                    alert('File upload failed');
+                });
+            } else {
+                alert('Please select a file and a language');
+            }
+        });
+
+        // Fetch metadata of the uploaded file (GET request)
+        function fetchMetadata() {
+            fetch(`${baseUrl}/dubbing/${fileId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Metadata:', data);
+                alert('Metadata fetched');
+            })
+            .catch(error => {
+                console.error('Error fetching metadata:', error);
+                alert('Failed to fetch metadata');
+            });
+        }
+
+        // Handle translation or transcript submission
+        submitButton.addEventListener('click', () => {
+            outputType = outputDropdown.value;
+            if (outputType === 'transcript') {
+                fetchTranscript(); // Fetch subtitles for transcript
+            } else if (outputType === 'translate') {
+                fetchDubbedVideo(); // Fetch the dubbed video
+            } else {
+                alert('Please select a valid output option');
+            }
+        });
+
+        function fetchTranscript() {
+            const languageCode = selectedLanguage; // Use the selected language
+            fetch(`${baseUrl}/v1/dubbing/${fileId}/transcript/${languageCode}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the transcript
+                outputVideoContainer.innerHTML = `<p>${data.transcript}</p>`;
+            })
+            .catch(error => {
+                console.error('Error fetching transcript:', error);
+                alert('Failed to fetch transcript');
+            });
+        }
+
+        // Fetch dubbed video in selected language (GET request)
+        function fetchDubbedVideo() {
+            const languageCode = selectedLanguage; // Use the selected language
+            fetch(`${baseUrl}/v1/dubbing/${fileId}/audio/${languageCode}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const videoUrl = URL.createObjectURL(blob);
+                // Display the dubbed video
+                outputVideoContainer.innerHTML = `<video controls><source src="${videoUrl}" type="video/mp4"></video>`;
+            })
+            .catch(error => {
+                console.error('Error fetching dubbed video:', error);
+                alert('Failed to fetch dubbed video');
+            });
+        }
+
+        // Handle file deletion (DELETE request) when "Done" button is clicked
+        doneButton.addEventListener('click', () => {
+            fetch(`${baseUrl}/dubbing/${fileId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    //pass
+                } else {
+                    throw new Error('Failed to delete file');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting the file:', error);
+                alert('Failed to delete file');
+            });
+        });
+
+        // Handle download functionality
+        downloadButton.addEventListener('click', () => {
+            if (outputType === 'translate') {
+                // Handle download of the dubbed video
+                alert('Download initiated');
+            } else if (outputType === 'transcript') {
+                // Handle download of the transcript (optional)
+                alert('Transcript download initiated');
+            } else {
+                alert('No output to download');
+            }
+        });
+    });
+
+
+</script>
 </body>
 </html>

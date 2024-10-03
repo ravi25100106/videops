@@ -1,54 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="ai.css">
-</head>
-<body>
-    <nav class="navbar  navbar-light bg-light">
-        <div class="container-fluid">
-            <h1 class="heading">VIDEOPS</h1>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon bg-white"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a href=index.html style="font-size:20px; color: black;">Home</a></li>
-                <li class="nav-item"><a href=video_finder.html style="font-size:20px; color: black;">Video Finder</a></li>
-                <li class="nav-item"><a href=video_dubbing.html style="font-size:20px; color: black;">Video Translator</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!--end if the nav bar-->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Generator</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="ai.css" />
+        <style>
+            /* styles.css */
 
-      <!--body-->
+            .heading {
+                padding-left: 40%;
+                color: rgb(0, 0, 0);
+                text-decoration: wavy;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            form {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            label {
+                display: block;
+                margin: 10px 0 5px;
+            }
+
+            textarea,
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+
+            #gen-output-container {
+                max-width: 600px;
+                margin: 20px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <h1 class="heading">VIDEOPS</h1>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon bg-white"></span>
+                </button>
+                <div
+                    class="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                >
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a
+                                href="index.html"
+                                style="font-size: 20px; color: black"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="video_finder.html"
+                                style="font-size: 20px; color: black"
+                                >Video Finder</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="video_dubbing.html"
+                                style="font-size: 20px; color: black"
+                                >Video Translator</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--end if the nav bar-->
+
+        <!--body-->
         <form id="video-form">
-    <label for="video-description">Describe the Video:</label>
-    <textarea id="gen-video-description" name="video-description" rows="4" cols="50"></textarea>
-    <button id="gen-mic-button">&#x1F3A4;</button> <!-- Mic Icon -->
-    <button id="clear-button">Clear</button>
+            <label for="video-description">Describe the Video:</label>
+            <textarea
+                id="gen-video-description"
+                name="video-description"
+                rows="4"
+                cols="50"
+            ></textarea>
+            <button id="gen-mic-button">&#x1F3A4;</button>
+            <!-- Mic Icon -->
+            <button id="clear-button">Clear</button>
 
-    <label for="video-type">Select Video Type:</label>
-    <select id="gen-video-type" name="video-type">
-        <option value="None">Select</option>
-        <option value="anime">Anime</option>
-        <option value="realistic">Realistic</option>
-        <option value="colored">Colored</option>
-        <option value="black-and-white">Black and White</option>
-    </select>
+            <label for="video-type">Select Video Type:</label>
+            <select id="gen-video-type" name="video-type">
+                <option value="None">Select</option>
+                <option value="anime">Anime</option>
+                <option value="realistic">Realistic</option>
+                <option value="colored">Colored</option>
+                <option value="black-and-white">Black and White</option>
+            </select>
 
-    <button id="gen-submit" type="submit">Generate</button>
-</form>
+            <button id="gen-submit" type="submit">Generate</button>
+        </form>
 
-<div id="gen-output-container"></div>
+        <div id="gen-output-container"></div>
 
-<script src="ai.js"></script>
-      <!--body end-->
-      
-</body>
+        <script>
+            // scripts.js
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const videoForm = document.getElementById("video-form");
+                const outputContainer = document.getElementById(
+                    "gen-output-container",
+                );
+
+                // Handle form submission
+                videoForm.addEventListener("submit", async (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData(videoForm);
+                    const data = {
+                        description: formData.get("video-description"),
+                        type: formData.get("video-type"),
+                    };
+
+                    // Send data to backend for video processing
+                    const response = await fetch("/api/process-video", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+                    displayOutput(result);
+                });
+
+                function displayOutput(result) {
+                    outputContainer.innerHTML = `<video controls width="100%">
+                <source src="${result.videoUrl}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>`;
+                }
+            });
+        </script>
+        <!--body end-->
+    </body>
 </html>
